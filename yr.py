@@ -181,5 +181,5 @@ class YrData:
             self.data = self.root.findall("./product/time[@datatype='forecast']/location/temperature/../..")
             self.currently = self.root.find("./product/time[@datatype='forecast']/location/temperature/../..")
         except (ConnectError, HTTPError, Timeout, ValueError) as error:
-            _LOGGER.error("Unable to connect to Dark Sky. %s", error)
+            _LOGGER.error("Unable to connect to YR. %s", error)
             self.data = None
