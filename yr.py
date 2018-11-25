@@ -27,30 +27,47 @@ ATTRIBUTION = "Weather forecast from met.no, delivered by the Norwegian Meteorol
 # https://api.met.no/license_data.html
 
 MAP_CONDITION = {
-        '1': 'sunny',
-        '2': 'partlycloudy',
-        '3': 'partlycloudy',
-        '4': 'cloudy',
-        '5': 'rainy',
-        '6': 'rainy',
-        '7': 'snowy-rainy',
-        '8': 'snowy',
-        '9': 'rainy',
-        '10': 'pouring',
-        '11': 'lightning-rainy',
-        '12': 'snowy-rainy',
-        '13': 'snowy',
-        '15': 'fog',
-        '22': 'lightning-rainy',
-        '25': 'lightning-rainy',
-        '30': 'lightning-rainy',
-        '40': 'rainy',
-        '41': 'rainy',
-        '46': 'rainy',
-        '47': 'snowy-rainy',
-        '48': 'snowy-rainy',
-        '49': 'snowy',
-        '50': 'snowy',
+        1: 'sunny',
+        2: 'partlycloudy',
+        3: 'partlycloudy',
+        4: 'cloudy',
+        5: 'rainy',
+        6: 'lightning-rainy',
+        7: 'snowy-rainy',
+        8: 'snowy',
+        9: 'rainy',
+        10: 'rainy',
+        11: 'lightning-rainy',
+        12: 'snowy-rainy',
+        13: 'snowy',
+        14: 'snowy',
+        15: 'fog',
+        20: 'lightning-rainy',
+        21: 'lightning-rainy',
+        22: 'lightning-rainy',
+        23: 'lightning-rainy',
+        24: 'lightning-rainy',
+        25: 'lightning-rainy',
+        26: 'lightning-rainy',
+        27: 'lightning-rainy',
+        28: 'lightning-rainy',
+        29: 'lightning-rainy',
+        30: 'lightning-rainy',
+        31: 'lightning-rainy',
+        32: 'lightning-rainy',
+        33: 'lightning-rainy',
+        34: 'lightning-rainy',
+        40: 'rainy',
+        41: 'rainy',
+        42: 'snowy-rainy',
+        43: 'snowy-rainy',
+        44: 'snowy',
+        45: 'snowy',
+        46: 'rainy',
+        47: 'snowy-rainy',
+        48: 'snowy-rainy',
+        49: 'snowy',
+        50: 'snowy',
 }
 
 #https://api.met.no/weatherapi/weathericon/1.1/documentation
@@ -120,7 +137,7 @@ class YrWeather(WeatherEntity):
     @property
     def wind_bearing(self):
         """Return the wind bearing."""
-        return self._ds_currently.find("location/windDirection").get("name")
+        return self._ds_currently.find("location/windDirection").get("deg")
 
     @property
     def pressure(self):
@@ -130,7 +147,7 @@ class YrWeather(WeatherEntity):
     @property
     def condition(self):
         """Return the weather condition."""
-        return MAP_CONDITION.get(self._ds_root.find("./product/time/[@to='{}']/location/symbol".format(self._ds_currently.get("to"))).get("number"), "exceptional")
+        return MAP_CONDITION.get(int(self._ds_root.find("./product/time/[@to='{}']/location/symbol".format(self._ds_currently.get("to"))).get("number")), "exceptional")
 
     @property
     def forecast(self):
@@ -148,7 +165,7 @@ class YrWeather(WeatherEntity):
             ATTR_FORECAST_WIND_BEARING:
                 entry.find("location/windDirection").get("name"),
             ATTR_FORECAST_CONDITION:
-                MAP_CONDITION.get(self._ds_root.find("./product/time/[@to='{}']/location/symbol".format(entry.get("to"))).get("number"), "exceptional")
+                MAP_CONDITION.get(int(self._ds_root.find("./product/time/[@to='{}']/location/symbol".format(entry.get("to"))).get("number")), "exceptional")
         } for entry in self._ds_data]
 
         return data
