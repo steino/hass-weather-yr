@@ -1,0 +1,9 @@
+{
+	"weather.yr": {
+		"version": "0.0.2",
+		"local_location": "custom_components/weather/yr.py",
+		"remote_location": "https://raw.githubusercontent.com/steino/hass-weather-yr/master/yr.py",
+		"visit_repo": "https://github.com/steino/hass-weather-yr",
+		"changelog": "https://github.com/steino/hass-weather-yr/commits/master"
+	}
+}

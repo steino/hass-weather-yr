@@ -21,6 +21,8 @@ from homeassistant.util import Throttle
 
 import homeassistant.util.dt as dt_util
 
+__version__ = '0.0.2'
+
 _LOGGER = logging.getLogger(__name__)
 
 ATTRIBUTION = "Weather forecast from met.no, delivered by the Norwegian Meteorological Institute."
